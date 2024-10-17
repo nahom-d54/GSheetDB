@@ -20,7 +20,7 @@ pip install GSheetDB
 ```
 
 ## **Usage**
-## 1. Authenticate with Google Sheets
+### 1. Authenticate with Google Sheets
 Create a service account and download the credentials JSON. Initialize the client with your credentials:
 
 ``` python
@@ -31,7 +31,7 @@ client = GSheetClient("path/to/credentials.json")
 db = client.get_database("MySpreadsheet")
 collection = db.get_collection("Sheet1")
 ```
-## 2. Insert Data
+### 2. Insert Data
 ```python
 collection.insert_one({"name": "Alice", "age": 25})
 collection.insert_many([
@@ -39,7 +39,7 @@ collection.insert_many([
     {"name": "Charlie", "age": 22}
 ])
 ```
-## 3. Query Data
+### 3. Query Data
 ``` python
 # Find all users older than 25
 results = collection.find({"age": {"$gt": 25}})
@@ -49,11 +49,11 @@ print(results)
 user = collection.find_one({"name": "Alice"})
 print(user)
 ```
-## 4. Update Data
+### 4. Update Data
 ``` python 
 collection.update_one({"name": "Alice"}, {"name": "Alice", "age": 26})
 ```
-## 5. Delete Data
+### 5. Delete Data
 ``` python
 collection.delete_one({"name": "Charlie"})
 ```
