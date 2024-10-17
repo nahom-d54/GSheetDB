@@ -2,7 +2,7 @@
 
 `GSheetDB` is a **PyMongo-inspired** library that allows you to interact with **Google Sheets** like a database. It provides a Pythonic interface to manage worksheets, perform CRUD operations, and run advanced queries.
 
-## Features
+## **Features**
 
 - **CRUD operations**: Insert, update, delete, and find rows.
 - **Advanced queries**: Use MongoDB-style filters with `$gt`, `$in`, `$eq`, etc.
@@ -11,7 +11,7 @@
 - **Cross-sheet joins**: Join data across worksheets.
 - **CLI support**: Interact with Google Sheets via the command line.
 
-## Installation
+## **Installation**
 
 Install the library using `pip`:
 
@@ -19,7 +19,7 @@ Install the library using `pip`:
 pip install GSheetDB
 ```
 
-## Usage
+## **Usage**
 ## 1. Authenticate with Google Sheets
 Create a service account and download the credentials JSON. Initialize the client with your credentials:
 
@@ -57,7 +57,7 @@ collection.update_one({"name": "Alice"}, {"name": "Alice", "age": 26})
 ``` python
 collection.delete_one({"name": "Charlie"})
 ```
-## CLI Usage
+## **CLI Usage**
 You can also interact with Google Sheets using the command line:
 
 ``` bash
@@ -68,8 +68,9 @@ Run the test suite using:
 ``` bash
 python -m unittest discover tests/
 ```
-## License
+## **License**
 This project is licensed under the MIT License.
 
-## Acknowledgements
-This library was developed by ChatGPT with contributions and suggestions from users like you!
+## **Acknowledgments**
+
+This project is a collaborative effort, developed with contributions from users and insights from the community. Special thanks to **Lexi**, an AI assistant developed by OpenAI, for assisting in the development and providing suggestions throughout the process.
