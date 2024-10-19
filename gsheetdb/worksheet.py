@@ -90,70 +90,72 @@ class WorksheetWithSchema(Worksheet):
         values = [list(data.dict().values()) for data in validated_data_list]
         self.worksheet.append_rows(values)
 
+    # can't execute query from python programatically so defaulting back to previous version
+    ##
 
-    def query(self, query_string: str) -> List[Dict[str, Any]]:
-        """Execute a SQL-like query using Google Sheets' QUERY function."""
-        # Dynamically determine the range of the worksheet
-        num_rows = self.worksheet.row_count
-        num_cols = self.worksheet.col_count
-        range_ref = f"A1:{column_letter(num_cols)}{num_rows}"  # Handle columns beyond Z
+    # def query(self, query_string: str) -> List[Dict[str, Any]]:
+    #     """Execute a SQL-like query using Google Sheets' QUERY function."""
+    #     # Dynamically determine the range of the worksheet
+    #     num_rows = self.worksheet.row_count
+    #     num_cols = self.worksheet.col_count
+    #     range_ref = f"A1:{column_letter(num_cols)}{num_rows}"  # Handle columns beyond Z
 
-        # Construct the full QUERY function
-        full_query = f'=QUERY({range_ref}, "{query_string}")'
+    #     # Construct the full QUERY function
+    #     full_query = f'=QUERY({range_ref}, "{query_string}")'
 
-        # Fetch query results
-        query_results = self.worksheet.get_values()
+    #     # Fetch query results
+    #     query_results = self.worksheet.get_values()
 
-        # Convert query results to dictionaries using expected headers
-        if self.headers:
-            return [dict(zip(self.headers, row)) for row in query_results[1:]]
-        else:
-            raise ValueError("Expected headers must be set to use this method.")
+    #     # Convert query results to dictionaries using expected headers
+    #     if self.headers:
+    #         return [dict(zip(self.headers, row)) for row in query_results[1:]]
+    #     else:
+    #         raise ValueError("Expected headers must be set to use this method.")
 
-    def find(self, filter_query: Dict) -> List[Dict[str, Any]]:
-        """Execute a MongoDB-like query using Google Sheets' QUERY function."""
-        # Translate the MongoDB-like filter query to SQL-like syntax
-        where_clause = self.translate_query(filter_query)
+    # def find(self, filter_query: Dict) -> List[Dict[str, Any]]:
+    #     """Execute a MongoDB-like query using Google Sheets' QUERY function."""
+    #     # Translate the MongoDB-like filter query to SQL-like syntax
+    #     where_clause = self.translate_query(filter_query)
 
-        # Construct the full SQL-like query
-        query_string = f"SELECT * WHERE {where_clause}"
+    #     # Construct the full SQL-like query
+    #     query_string = f"SELECT * WHERE {where_clause}"
 
-        # Call the query method with the constructed query string
-        return self.query(query_string)
+    #     # Call the query method with the constructed query string
+    #     return self.query(query_string)
 
-    def translate_query(self, filter_query: Dict) -> str:
-        """Translate a MongoDB-like query to a SQL-like WHERE clause."""
-        def parse_condition(key, condition):
-            if isinstance(condition, dict):
-                if "$eq" in condition:
-                    return f"{key} = '{condition['$eq']}'"
-                elif "$gt" in condition:
-                    return f"{key} > {condition['$gt']}"
-                elif "$lt" in condition:
-                    return f"{key} < {condition['$lt']}"
-                elif "$gte" in condition:
-                    return f"{key} >= {condition['$gte']}"
-                elif "$lte" in condition:
-                    return f"{key} <= {condition['$lte']}"
-                elif "$in" in condition:
-                    values = ", ".join([f"'{v}'" for v in condition["$in"]])
-                    return f"{key} IN ({values})"
-            else:
-                return f"{key} = '{condition}'"
+    # def translate_query(self, filter_query: Dict) -> str:
+    #     """Translate a MongoDB-like query to a SQL-like WHERE clause."""
+    #     def parse_condition(key, condition):
+    #         if isinstance(condition, dict):
+    #             if "$eq" in condition:
+    #                 return f"{key} = '{condition['$eq']}'"
+    #             elif "$gt" in condition:
+    #                 return f"{key} > {condition['$gt']}"
+    #             elif "$lt" in condition:
+    #                 return f"{key} < {condition['$lt']}"
+    #             elif "$gte" in condition:
+    #                 return f"{key} >= {condition['$gte']}"
+    #             elif "$lte" in condition:
+    #                 return f"{key} <= {condition['$lte']}"
+    #             elif "$in" in condition:
+    #                 values = ", ".join([f"'{v}'" for v in condition["$in"]])
+    #                 return f"{key} IN ({values})"
+    #         else:
+    #             return f"{key} = '{condition}'"
 
-        clauses = []
+    #     clauses = []
 
-        if "$and" in filter_query:
-            clauses = [self.translate_query(sub_query) for sub_query in filter_query["$and"]]
-            return " AND ".join(clauses)
+    #     if "$and" in filter_query:
+    #         clauses = [self.translate_query(sub_query) for sub_query in filter_query["$and"]]
+    #         return " AND ".join(clauses)
 
-        if "$or" in filter_query:
-            clauses = [self.translate_query(sub_query) for sub_query in filter_query["$or"]]
-            return " OR ".join(clauses)
+    #     if "$or" in filter_query:
+    #         clauses = [self.translate_query(sub_query) for sub_query in filter_query["$or"]]
+    #         return " OR ".join(clauses)
 
-        for key, condition in filter_query.items():
-            clauses.append(parse_condition(key, condition))
+    #     for key, condition in filter_query.items():
+    #         clauses.append(parse_condition(key, condition))
 
-        return " AND ".join(clauses)
+    #     return " AND ".join(clauses)
 
 
