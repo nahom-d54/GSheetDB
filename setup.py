@@ -5,7 +5,7 @@ with open("README.md", "r") as d:
     
 setup(
     name="GSheetDB",
-    version="1.1.0",
+    version="1.1.1",
     description="A PyMongo-inspired Google Sheets library for Python",
     author="Nahom Dereje",
     author_email="nahom@nahom.eu.org",
