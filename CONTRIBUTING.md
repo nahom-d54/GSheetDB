@@ -23,7 +23,7 @@ Thank you for considering contributing to **GSheetDB**! 🎉 Your contributions 
 2. **Clone Your Fork Locally**:  
    Use the following command to clone your fork:
 
-   git clone https://github.com/your-username/GSheetDB.git  
+   git clone https://github.com/nahom-d54/GSheetDB.git  
    cd GSheetDB
 
 3. **Create a Branch for Your Contribution**:  
